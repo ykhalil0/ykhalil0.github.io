@@ -1,0 +1,217 @@
+/* Karpathy-inspired minimal style with Inter font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #333;
+    background: #fff;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+.container {
+    width: 100%;
+}
+
+/* Header */
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.profile-pic {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #111;
+}
+
+.tagline {
+    font-size: 18px;
+    font-weight: 400;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* Social Icons */
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+.social-icons a {
+    color: #666;
+    transition: color 0.2s;
+}
+
+.social-icons a:hover {
+    color: #111;
+}
+
+/* Horizontal Rule */
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 40px 0;
+}
+
+/* Timeline */
+.timeline-entry {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 32px;
+    align-items: flex-start;
+}
+
+.timeline-logo {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+}
+
+.timeline-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.timeline-content {
+    flex: 1;
+}
+
+.timeline-year {
+    font-size: 13px;
+    font-weight: 600;
+    color: #888;
+    margin-bottom: 6px;
+}
+
+.timeline-content p {
+    margin: 0;
+}
+
+/* Links */
+a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Sections */
+.section {
+    margin-bottom: 40px;
+}
+
+.section h3 {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: lowercase;
+    color: #888;
+    margin-bottom: 12px;
+    letter-spacing: 0.3px;
+}
+
+.section p {
+    margin-bottom: 12px;
+}
+
+/* Project Grid */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.project {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.project img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.project p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Footer */
+footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    text-align: center;
+}
+
+footer p {
+    font-size: 13px;
+    color: #999;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    body {
+        padding: 40px 16px;
+    }
+    
+    .profile-pic {
+        width: 140px;
+        height: 140px;
+    }
+    
+    h1 {
+        font-size: 26px;
+    }
+    
+    .tagline {
+        font-size: 16px;
+    }
+    
+    .timeline-entry {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .timeline-logo {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .project {
+        flex-direction: column;
+    }
+    
+    .project img {
+        width: 100%;
+        height: auto;
+        max-width: 200px;
+    }
+}
