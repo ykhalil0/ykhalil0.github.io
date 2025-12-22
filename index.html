@@ -1,12 +1,150 @@
 <!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Yusuf Khalil</title>
-  </head>
-  <body>
-    <h1>Yusuf Khalil, MD</h1>
-    <p>Site migration in progress.</p>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yusuf Khalil</title>
+  <meta name="description" content="Yusuf Khalil — writing, projects, and notes." />
+  <style>
+    :root {
+      --text: #111;
+      --muted: #666;
+      --link: #0b57d0;
+      --bg: #fff;
+      --border: #eaeaea;
+    }
+    html, body { background: var(--bg); }
+    body {
+      margin: 0;
+      color: var(--text);
+      font: 16px/1.65 ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    }
+    .wrap {
+      max-width: 760px;
+      padding: 48px 22px;
+      margin: 0 auto;
+    }
+    header {
+      margin-bottom: 28px;
+    }
+    h1 {
+      font-size: 34px;
+      line-height: 1.15;
+      margin: 0 0 10px 0;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    hr {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: 26px 0;
+    }
+    h2 {
+      font-size: 18px;
+      margin: 0 0 10px 0;
+      font-weight: 700;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    li {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    li:last-child { border-bottom: 0; }
+    .item-title { display: inline; }
+    .item-meta {
+      color: var(--muted);
+      font-size: 14px;
+      margin-left: 10px;
+      white-space: nowrap;
+    }
+    footer {
+      margin-top: 36px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .nav a { margin-right: 12px; }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Yusuf Khalil</h1>
+      <p class="sub">
+        Physician. Builder. Investor. Writing and projects.
+      </p>
+      <p class="nav">
+        <a href="#writing">Writing</a>
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </p>
+    </header>
+
+    <hr />
+
+    <section id="writing">
+      <h2>Writing</h2>
+      <ul>
+        <li>
+          <a class="item-title" href="posts/starting-point.html">Starting point</a>
+          <span class="item-meta">2025-12-22</span>
+        </li>
+        <li>
+          <a class="item-title" href="posts/notes-on-building.html">Notes on building</a>
+          <span class="item-meta">2025-12-22</span>
+        </li>
+      </ul>
+    </section>
+
+    <hr />
+
+    <section id="projects">
+      <h2>Projects</h2>
+      <ul>
+        <li><a href="#">Skincerto</a> — wound tracking and documentation.</li>
+        <li><a href="#">Symmvia</a> — dermatology-inspired wellness.</li>
+      </ul>
+    </section>
+
+    <hr />
+
+    <section id="about">
+      <h2>About</h2>
+      <p>
+        I write about dermatology, building software, and investing. This site is intentionally minimal.
+      </p>
+    </section>
+
+    <hr />
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>
+        Email: <a href="mailto:you@yusufkhalil.com">you@yusufkhalil.com</a><br />
+        LinkedIn: <a href="#">link</a><br />
+        GitHub: <a href="https://github.com/ykhalil0">ykhalil0</a>
+      </p>
+    </section>
+
+    <footer>
+      <p>© <span id="y"></span> Yusuf Khalil.</p>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</body>
 </html>
