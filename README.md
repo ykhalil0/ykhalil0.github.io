@@ -31,6 +31,7 @@ Quick reminders:
 - Use `Inter` and preserve the current type scale.
 - Publications: title + right-side cedar year + IEEE-style metadata (no `[1]`, newest first).
 - Books: `Title — Author, Year.` format on `/books/`; comments optional.
+- Books can be grouped with simple lowercase category sub-headers.
 - Timeline logos should stay visually consistent in size and alignment.
 - Check desktop, iPad, and mobile before pushing.
 
