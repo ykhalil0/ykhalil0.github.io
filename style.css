@@ -229,6 +229,11 @@ a:hover {
     line-height: 1.45;
 }
 
+.inline-note {
+    color: var(--muted);
+    font-size: 14px;
+}
+
 .site-note {
     margin-top: 10px;
     font-size: 13px;
@@ -301,6 +306,10 @@ a:hover {
 
     .book-comment {
         font-size: 13.5px;
+    }
+
+    .inline-note {
+        font-size: 13px;
     }
 
     .site-note {
