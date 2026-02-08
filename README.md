@@ -30,6 +30,7 @@ Treat it as the source of truth for current design preferences and constraints.
 Quick reminders:
 - Use `Inter` and preserve the current type scale.
 - Publications: title + right-side cedar year + IEEE-style metadata (no `[1]`, newest first).
+- Books: `Title — Author, Year.` format on `/books/`; comments optional.
 - Timeline logos should stay visually consistent in size and alignment.
 - Check desktop, iPad, and mobile before pushing.
 

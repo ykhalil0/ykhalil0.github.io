@@ -218,6 +218,17 @@ a:hover {
     margin-bottom: 0;
 }
 
+.book-entry {
+    color: var(--text);
+}
+
+.book-comment {
+    margin-top: 2px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.45;
+}
+
 .site-note {
     margin-top: 10px;
     font-size: 13px;
@@ -286,6 +297,10 @@ a:hover {
 
     .books-read {
         padding-left: 20px;
+    }
+
+    .book-comment {
+        font-size: 13.5px;
     }
 
     .site-note {

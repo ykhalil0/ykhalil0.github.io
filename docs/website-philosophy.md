@@ -30,6 +30,13 @@ This site should stay minimal, fast, and content-first, inspired by `https://kar
 - Keep DOI clickable and include PubMed when available.
 - Keep punctuation and abbreviations consistent.
 
+## Books Rules
+- Keep `/books/` extremely simple and text-first.
+- Use format: `Title — Author, Year.`
+- Comments are optional.
+- If a comment is present, put it on the next line in muted text.
+- Not every book entry needs a comment.
+
 ## Content Rules
 - Keep copy concise and direct.
 - Avoid placeholders and dead links.
