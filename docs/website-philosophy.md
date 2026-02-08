@@ -41,11 +41,12 @@ This site follows a "minimal style, rich substance" direction inspired by `https
   - `interests`
 
 ## Citation Standard
-- Publication entries should use `Vancouver/NLM` style (medical default for this site).
+- Publication entries should use `IEEE` style (numbered, compact, scan-friendly).
 - Base format:
-  - `Author Surname Initials. Title. Journal Abbrev. Year;Volume(Issue):Pages. doi:DOI.`
+  - `[n] Initials. Surname, Initials. Surname, and Initials. Surname, "Title," Journal Abbrev., vol. x, no. y, pp. z-z, Year, doi: DOI.`
 - Keep the title linked to the publication page when available.
-- Add `DOI` and `PubMed` links at the end when available.
+- Keep the DOI inline as part of the citation and make it clickable.
+- Add a `PubMed` link at the end when available.
 - Keep punctuation and spacing consistent across all entries.
 
 ## Responsiveness Standards

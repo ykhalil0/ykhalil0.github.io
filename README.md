@@ -25,7 +25,7 @@ Then open `http://localhost:8000`.
 ## Design Philosophy
 Reference `docs/website-philosophy.md` before making UI or content-structure changes.
 Treat it as the source of truth for current design preferences and constraints.
-Use the citation rules in that document for all publication entries (`Vancouver/NLM` format).
+Use the citation rules in that document for all publication entries (`IEEE` format).
 
 ## Editing Workflow
 1. Update `index.html` and/or `style.css`.
