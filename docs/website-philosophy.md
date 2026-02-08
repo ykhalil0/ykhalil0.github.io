@@ -35,8 +35,8 @@ This site should stay minimal, fast, and content-first, inspired by `https://kar
 - Group entries under lowercase sub-header categories (for example: `science fiction`, `history`).
 - Use format: `Title — Author, Year.`
 - Use year ranges for multi-volume works when needed (`1935-1975`).
-- Comments are optional.
-- If a comment is present, put it on the next line in muted text.
+- Personal comments/opinions are optional.
+- If a personal comment is present, put it on the next line in muted text.
 - Not every book entry needs a comment.
 
 ## Content Rules
