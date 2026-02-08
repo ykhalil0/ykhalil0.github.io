@@ -40,6 +40,14 @@ This site follows a "minimal style, rich substance" direction inspired by `https
   - `publications`
   - `interests`
 
+## Citation Standard
+- Publication entries should use `Vancouver/NLM` style (medical default for this site).
+- Base format:
+  - `Author Surname Initials. Title. Journal Abbrev. Year;Volume(Issue):Pages. doi:DOI.`
+- Keep the title linked to the publication page when available.
+- Add `DOI` and `PubMed` links at the end when available.
+- Keep punctuation and spacing consistent across all entries.
+
 ## Responsiveness Standards
 - Must look good on desktop, iPad, and mobile.
 - Prevent horizontal overflow.
