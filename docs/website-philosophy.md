@@ -1,33 +1,64 @@
 # Website Philosophy
 
-This site should follow a "minimal style, rich substance" approach inspired by `https://karpathy.ai/`.
+Last updated: February 8, 2026.
 
-## Core Direction
-- Content first. The writing and links matter more than visual effects.
-- Minimal styling. Keep CSS simple, readable, and easy to maintain.
-- Lightweight stack. Static HTML/CSS, fast load, no heavy framework by default.
-- Personal and direct voice. Keep copy clear and specific.
+This site follows a "minimal style, rich substance" direction inspired by `https://karpathy.ai/`.
 
-## Visual Guidelines
-- Single-column, readable layout with generous whitespace.
-- Neutral colors and straightforward typography.
-- Use icons and small visual elements only when they improve scanning.
-- Avoid decorative complexity, crowded sections, and flashy animation.
+## North Star
+- Content first.
+- Clean, minimal visual language.
+- Fast static site (`HTML` + `CSS`) with no unnecessary complexity.
+- Professional, direct tone.
 
-## Content Guidelines
-- Header: name, short one-line tagline, social links/icons.
-- Timeline: concise entries that show progression over time.
-- Sections: `bio`, `projects`, `interests` in plain language.
-- Featured media (videos/talks/interviews) is welcome, but should stay organized and lightweight.
+## Current UI/UX Preferences
+- Typography:
+  - Use `Inter`.
+  - Keep body text readable (currently `16px`).
+  - Keep headings simple and strong; section labels subtle but legible.
+- Layout:
+  - Single-column centered layout with generous whitespace.
+  - Keep scanability high with clear section separation and simple hierarchy.
+- Color:
+  - Neutral background and text (white + dark gray/black).
+  - Blue links; no loud palette shifts.
+- Timeline:
+  - Use recognizable brand logos/marks for entries.
+  - Keep logos aligned and constrained so rows remain clean.
+  - Avoid oversized logos and avoid tiny low-quality favicon-only look.
+- Header/social:
+  - Keep social icons simple and compact.
+  - Keep tagline short and plain.
 
-## Editing Rules
-- Every UI/content change should preserve the minimal, content-first feel.
-- Prefer simple HTML structure over complex nested components.
-- If adding a new section, keep it skimmable and consistent with existing spacing/typography.
-- Avoid adding visual effects unless they add clear informational value.
+## Content Preferences
+- Keep copy concise; avoid fluff.
+- No placeholder links like `href="#"`.
+- If a section has no real content yet, keep it minimal or hide it.
+- Current important sections:
+  - `timeline`
+  - `bio`
+  - `projects`
+  - `publications`
+  - `interests`
 
-## Quick Litmus Test
-Before shipping a change, ask:
-1. Is the page still simple and fast?
-2. Is the content easier to read and scan?
-3. Did we avoid unnecessary styling or UI complexity?
+## Responsiveness Standards
+- Must look good on desktop, iPad, and mobile.
+- Prevent horizontal overflow.
+- Keep spacing and typography readable at smaller widths.
+- Maintain clear timeline alignment across breakpoints.
+
+## Brand Rules
+- Favicon should be personal/neutral (`YK`) and not institution-branded.
+- Do not let school/company branding override personal site identity.
+
+## Do/Don't
+- Do preserve the minimal, professional look.
+- Do improve readability before adding visual complexity.
+- Do use consistent sizing/alignment for logos and icons.
+- Don't introduce decorative effects unless they add clear value.
+- Don't add framework/tooling overhead for simple static needs.
+
+## Pre-Push Checklist
+1. Does the page still feel minimal and content-first?
+2. Are there any placeholder links or placeholder sections left?
+3. Does it render well on desktop, iPad, and mobile?
+4. Are logos/icons aligned and visually balanced?

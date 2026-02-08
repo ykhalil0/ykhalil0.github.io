@@ -24,6 +24,7 @@ Then open `http://localhost:8000`.
 
 ## Design Philosophy
 Reference `docs/website-philosophy.md` before making UI or content-structure changes.
+Treat it as the source of truth for current design preferences and constraints.
 
 ## Editing Workflow
 1. Update `index.html` and/or `style.css`.
