@@ -25,7 +25,12 @@ Then open `http://localhost:8000`.
 ## Design Philosophy
 Reference `docs/website-philosophy.md` before making UI or content-structure changes.
 Treat it as the source of truth for current design preferences and constraints.
-Use the citation rules in that document for all publication entries (`IEEE-style metadata`, sorted by year).
+
+Quick reminders:
+- Use `Inter` and preserve the current type scale.
+- Publications: title + right-side cedar year + IEEE-style metadata (no `[1]`, newest first).
+- Timeline logos should stay visually consistent in size and alignment.
+- Check desktop, iPad, and mobile before pushing.
 
 ## Editing Workflow
 1. Update `index.html` and/or `style.css`.

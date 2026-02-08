@@ -2,75 +2,43 @@
 
 Last updated: February 8, 2026.
 
-This site follows a "minimal style, rich substance" direction inspired by `https://karpathy.ai/`.
+This site should stay minimal, fast, and content-first, inspired by `https://karpathy.ai/`.
 
-## North Star
-- Content first.
-- Clean, minimal visual language.
-- Fast static site (`HTML` + `CSS`) with no unnecessary complexity.
-- Professional, direct tone.
+## Quick Guardrails
+- Keep design simple and scannable; avoid visual noise.
+- Use `Inter`.
+- Preserve neutral palette (white + near-black text, blue links).
+- Publication year accent uses Lebanese cedar green: `#007a3d`.
+- Keep single-column layout and generous whitespace.
+- Keep social icons compact and header plain.
 
-## Current UI/UX Preferences
-- Typography:
-  - Use `Inter`.
-  - Keep body text readable (currently `16px`).
-  - Keep headings simple and strong; section labels subtle but legible.
-- Layout:
-  - Single-column centered layout with generous whitespace.
-  - Keep scanability high with clear section separation and simple hierarchy.
-- Color:
-  - Neutral background and text (white + dark gray/black).
-  - Blue links; no loud palette shifts.
-- Timeline:
-  - Use recognizable brand logos/marks for entries.
-  - Keep logos aligned and constrained so rows remain clean.
-  - Avoid oversized logos and avoid tiny low-quality favicon-only look.
-- Header/social:
-  - Keep social icons simple and compact.
-  - Keep tagline short and plain.
+## Typography
+- Desktop body: `16px / 1.58`.
+- Mobile body: `15.5px / 1.56`.
+- Section labels: `16px` desktop, `15px` mobile.
+- Prioritize readability over density.
 
-## Content Preferences
-- Keep copy concise; avoid fluff.
-- No placeholder links like `href="#"`.
-- If a section has no real content yet, keep it minimal or hide it.
-- Current important sections:
-  - `timeline`
-  - `bio`
-  - `projects`
-  - `publications`
-  - `interests`
+## Timeline Rules
+- Keep a consistent logo box and alignment across rows.
+- Avoid oversized logos and tiny blurry marks.
+- Preserve clear `date -> logo -> description` scan order.
 
-## Citation Standard
-- Publication entries should use `IEEE-style` metadata with `date-first scanning`.
-- Base format:
-  - `Initials. Surname, Initials. Surname, and Initials. Surname, Journal Abbrev., vol. x, no. y, pp. z-z, Year, doi: DOI.`
-- Do not use numeric citation indices (`[1]`, `[2]`, ...); order publications by year instead.
+## Publication Rules
 - Sort publications newest to oldest.
-- Show publication year as a clearly visible colored label on the right side of each publication row for quick scanning.
-- Keep the title linked to the publication page when available.
-- Keep the DOI inline as part of the citation and make it clickable.
-- Add a `PubMed` link at the end when available.
-- Keep punctuation and spacing consistent across all entries.
+- Use title-first layout with year on the right in cedar green.
+- Use IEEE-style metadata on the second line (no numeric indices).
+- Keep DOI clickable and include PubMed when available.
+- Keep punctuation and abbreviations consistent.
 
-## Responsiveness Standards
-- Must look good on desktop, iPad, and mobile.
-- Prevent horizontal overflow.
-- Keep spacing and typography readable at smaller widths.
-- Maintain clear timeline alignment across breakpoints.
-
-## Brand Rules
-- Favicon should be personal/neutral (`YK`) and not institution-branded.
-- Do not let school/company branding override personal site identity.
-
-## Do/Don't
-- Do preserve the minimal, professional look.
-- Do improve readability before adding visual complexity.
-- Do use consistent sizing/alignment for logos and icons.
-- Don't introduce decorative effects unless they add clear value.
-- Don't add framework/tooling overhead for simple static needs.
+## Content Rules
+- Keep copy concise and direct.
+- Avoid placeholders and dead links.
+- Keep core sections: `timeline`, `bio`, `projects`, `publications`, `interests`.
 
 ## Pre-Push Checklist
-1. Does the page still feel minimal and content-first?
-2. Are there any placeholder links or placeholder sections left?
-3. Does it render well on desktop, iPad, and mobile?
-4. Are logos/icons aligned and visually balanced?
+1. Still minimal and content-first?
+2. Typography and spacing still consistent?
+3. Timeline logos still aligned and balanced?
+4. Publications still follow title + year + IEEE-style metadata?
+5. Looks right on desktop, iPad, and mobile (no overflow)?
+6. Personal branding stays primary (`YK` favicon)?
