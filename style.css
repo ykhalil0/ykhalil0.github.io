@@ -135,9 +135,17 @@ a:hover {
 }
 
 .entry-icon {
-    font-size: 20px;
     line-height: 1;
     text-align: center;
+}
+
+.entry-icon img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    border-radius: 4px;
+    display: block;
+    margin: 0 auto;
 }
 
 .desc {
@@ -203,8 +211,9 @@ a:hover {
         padding-top: 1px;
     }
 
-    .entry-icon {
-        font-size: 18px;
+    .entry-icon img {
+        width: 20px;
+        height: 20px;
     }
 
     .featured-grid {
