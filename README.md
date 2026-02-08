@@ -9,6 +9,7 @@ Source for your personal website at:
 
 ## Project Structure
 - `index.html`: main page content and metadata
+- `books/index.html`: standalone books page
 - `style.css`: site styling
 - `CNAME`: custom domain (`yusufkhalil.com`)
 - `docs/website-philosophy.md`: design/content principles for this site
