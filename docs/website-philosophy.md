@@ -8,7 +8,7 @@ This site should stay minimal, fast, and content-first, inspired by `https://kar
 - Keep design simple and scannable; avoid visual noise.
 - Use `Inter`.
 - Preserve neutral palette (white + near-black text, blue links).
-- Publication year accent uses Lebanese cedar green: `#007a3d`.
+- Publication year accent uses Lebanese cedar green: `#00a651`.
 - Keep single-column layout and generous whitespace.
 - Keep social icons compact and header plain.
 
