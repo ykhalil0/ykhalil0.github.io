@@ -121,8 +121,8 @@ a:hover {
 
 .row {
     display: grid;
-    grid-template-columns: 120px 124px minmax(0, 1fr);
-    column-gap: 12px;
+    grid-template-columns: 120px 110px minmax(0, 1fr);
+    column-gap: 10px;
     align-items: center;
 }
 
@@ -135,8 +135,8 @@ a:hover {
 }
 
 .entry-icon {
-    width: 120px;
-    height: 32px;
+    width: 106px;
+    height: 28px;
     line-height: 1;
     display: flex;
     align-items: center;
@@ -151,8 +151,8 @@ a:hover {
 }
 
 .entry-icon--umich {
-    width: 44px;
-    height: 32px;
+    width: 36px;
+    height: 28px;
 }
 
 .entry-icon img {
@@ -202,7 +202,7 @@ a:hover {
     }
 
     .row {
-        grid-template-columns: 88px 96px minmax(0, 1fr);
+        grid-template-columns: 88px 84px minmax(0, 1fr);
         column-gap: 10px;
     }
 
@@ -213,8 +213,8 @@ a:hover {
     }
 
     .entry-icon {
-        width: 92px;
-        height: 24px;
+        width: 80px;
+        height: 22px;
     }
 
     .entry-icon--mark {
@@ -223,8 +223,8 @@ a:hover {
     }
 
     .entry-icon--umich {
-        width: 32px;
-        height: 24px;
+        width: 30px;
+        height: 22px;
     }
 
     .entry-icon img {
@@ -244,13 +244,13 @@ a:hover {
     }
 
     .row {
-        grid-template-columns: 104px 112px minmax(0, 1fr);
-        column-gap: 12px;
+        grid-template-columns: 104px 100px minmax(0, 1fr);
+        column-gap: 10px;
     }
 
     .entry-icon {
-        width: 108px;
-        height: 28px;
+        width: 96px;
+        height: 26px;
     }
 
     .entry-icon--mark {
@@ -259,7 +259,7 @@ a:hover {
     }
 
     .entry-icon--umich {
-        width: 38px;
-        height: 28px;
+        width: 34px;
+        height: 26px;
     }
 }
