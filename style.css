@@ -205,8 +205,8 @@ a:hover {
 }
 
 .books-read {
-    list-style: decimal;
-    padding-left: 24px;
+    list-style: none;
+    padding-left: 0;
     margin: 0;
 }
 
@@ -298,10 +298,6 @@ a:hover {
 
     .publication-citation {
         font-size: 15.5px;
-    }
-
-    .books-read {
-        padding-left: 20px;
     }
 
     .book-comment {

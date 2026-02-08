@@ -33,6 +33,7 @@ This site should stay minimal, fast, and content-first, inspired by `https://kar
 ## Books Rules
 - Keep `/books/` extremely simple and text-first.
 - Group entries under lowercase sub-header categories (for example: `science fiction`, `history`).
+- Do not enumerate books.
 - Use format: `Title — Author, Year.`
 - Use year ranges for multi-volume works when needed (`1935-1975`).
 - Personal comments/opinions are optional.
