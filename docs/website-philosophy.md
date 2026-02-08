@@ -33,7 +33,7 @@ This site should stay minimal, fast, and content-first, inspired by `https://kar
 ## Content Rules
 - Keep copy concise and direct.
 - Avoid placeholders and dead links.
-- Keep core sections: `timeline`, `bio`, `projects`, `publications`, `interests`.
+- Keep core sections: `timeline`, `bio`, `projects`, `publications`, `book list`, `interests`.
 
 ## Pre-Push Checklist
 1. Still minimal and content-first?

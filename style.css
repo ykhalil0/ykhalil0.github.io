@@ -204,6 +204,20 @@ a:hover {
     line-height: 1.5;
 }
 
+.book-list {
+    list-style: disc;
+    padding-left: 20px;
+    margin: 0;
+}
+
+.book-list li {
+    margin-bottom: 8px;
+}
+
+.book-list li:last-child {
+    margin-bottom: 0;
+}
+
 .site-note {
     margin-top: 10px;
     font-size: 13px;
@@ -268,6 +282,10 @@ a:hover {
 
     .publication-citation {
         font-size: 15.5px;
+    }
+
+    .book-list {
+        padding-left: 18px;
     }
 
     .site-note {
