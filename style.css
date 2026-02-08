@@ -16,7 +16,7 @@
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 15px;
+    font-size: 16px;
     line-height: 1.7;
     color: var(--text);
     background: var(--bg);
@@ -99,10 +99,10 @@ a:hover {
 }
 
 .section h3 {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
     text-transform: lowercase;
-    color: #767676;
+    color: #5f5f5f;
     margin-bottom: 14px;
     letter-spacing: 0.35px;
 }
@@ -127,7 +127,7 @@ a:hover {
 }
 
 .timespan {
-    font-size: 13px;
+    font-size: 14px;
     color: var(--muted);
     text-align: right;
     white-space: nowrap;
@@ -207,7 +207,7 @@ a:hover {
     }
 
     .timespan {
-        font-size: 12px;
+        font-size: 13px;
         text-align: left;
         padding-top: 1px;
     }
