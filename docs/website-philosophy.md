@@ -41,9 +41,12 @@ This site follows a "minimal style, rich substance" direction inspired by `https
   - `interests`
 
 ## Citation Standard
-- Publication entries should use `IEEE` style (numbered, compact, scan-friendly).
+- Publication entries should use `IEEE-style` metadata with `date-first scanning`.
 - Base format:
-  - `[n] Initials. Surname, Initials. Surname, and Initials. Surname, "Title," Journal Abbrev., vol. x, no. y, pp. z-z, Year, doi: DOI.`
+  - `Initials. Surname, Initials. Surname, and Initials. Surname, Journal Abbrev., vol. x, no. y, pp. z-z, Year, doi: DOI.`
+- Do not use numeric citation indices (`[1]`, `[2]`, ...); order publications by year instead.
+- Sort publications newest to oldest.
+- Show publication year as a clearly visible colored label on the right side of each publication row for quick scanning.
 - Keep the title linked to the publication page when available.
 - Keep the DOI inline as part of the citation and make it clickable.
 - Add a `PubMed` link at the end when available.
