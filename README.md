@@ -32,6 +32,7 @@ Quick reminders:
 - Publications: title + right-side cedar year + IEEE-style metadata (no `[1]`, newest first).
 - Books: `Title — Author, Year.` format on `/books/`; personal comments optional; no numbering.
 - Books can be grouped with simple lowercase category sub-headers.
+- User-authored notes/comments should be lowercase and italic.
 - Timeline logos should stay visually consistent in size and alignment.
 - Check desktop, iPad, and mobile before pushing.
 

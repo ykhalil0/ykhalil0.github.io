@@ -227,6 +227,8 @@ a:hover {
     color: var(--muted);
     font-size: 14px;
     line-height: 1.45;
+    font-style: italic;
+    text-transform: lowercase;
 }
 
 .book-philosophy {
@@ -236,17 +238,23 @@ a:hover {
     font-size: 15px;
     line-height: 1.55;
     text-align: left;
+    font-style: italic;
+    text-transform: lowercase;
 }
 
 .inline-note {
     color: var(--muted);
     font-size: 14px;
+    font-style: italic;
+    text-transform: lowercase;
 }
 
 .site-note {
     margin-top: 10px;
     font-size: 13px;
     color: var(--muted);
+    font-style: italic;
+    text-transform: lowercase;
 }
 
 @media (max-width: 600px) {

@@ -39,6 +39,7 @@ This site should stay minimal, fast, and content-first, inspired by `https://kar
 - Personal comments/opinions are optional.
 - If a personal comment is present, put it on the next line in muted text.
 - Not every book entry needs a comment.
+- All user-authored notes/comments should be lowercase and italic.
 
 ## Content Rules
 - Keep copy concise and direct.
