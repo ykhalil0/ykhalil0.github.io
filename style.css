@@ -229,6 +229,15 @@ a:hover {
     line-height: 1.45;
 }
 
+.book-philosophy {
+    margin: 10px auto 0;
+    max-width: 760px;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.55;
+    text-align: left;
+}
+
 .inline-note {
     color: var(--muted);
     font-size: 14px;
@@ -302,6 +311,11 @@ a:hover {
 
     .book-comment {
         font-size: 13.5px;
+    }
+
+    .book-philosophy {
+        font-size: 14px;
+        margin-top: 8px;
     }
 
     .inline-note {
