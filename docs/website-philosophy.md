@@ -15,7 +15,7 @@ This site should stay minimal, fast, and content-first, inspired by `https://kar
 ## Typography
 - Desktop body: `16px / 1.58`.
 - Mobile body: `15.5px / 1.56`.
-- Section labels: `16px` desktop, `15px` mobile.
+- Section labels: `17px` desktop, `15px` mobile.
 - Prioritize readability over density.
 
 ## Timeline Rules
