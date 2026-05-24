@@ -249,6 +249,39 @@ a:hover {
     text-transform: lowercase;
 }
 
+.collapsible-list {
+    color: var(--text);
+}
+
+.collapsible-list summary {
+    display: list-item;
+    color: var(--link);
+    cursor: pointer;
+    width: fit-content;
+}
+
+.collapsible-list summary:hover {
+    text-decoration: underline;
+}
+
+.collapsible-list:not([open]) ul {
+    display: none;
+}
+
+.collapsible-list ul {
+    list-style: none;
+    margin: 10px 0 0;
+    padding-left: 0;
+}
+
+.collapsible-list li {
+    margin-bottom: 6px;
+}
+
+.collapsible-list li:last-child {
+    margin-bottom: 0;
+}
+
 .site-note {
     margin-top: 10px;
     font-size: 13px;
