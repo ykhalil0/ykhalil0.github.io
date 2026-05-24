@@ -124,7 +124,9 @@ export default function ReverseCorsiBlockTask() {
   const [totalCorrect, setTotalCorrect] = useState(0);
   const [bestSolvedLength, setBestSolvedLength] = useState(0);
 
+  const boardSectionRef = useRef(null);
   const responseStartRef = useRef(null);
+  const startTimerRef = useRef(null);
   const expected = useMemo(() => [...currentSequence].reverse(), [currentSequence]);
   const accuracy = totalRounds ? Math.round((totalCorrect / totalRounds) * 100) : 0;
   const responseProgress = currentSequence.length
@@ -156,11 +158,30 @@ export default function ReverseCorsiBlockTask() {
     resetRoundState();
   }
 
+  function focusBoard() {
+    boardSectionRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  }
+
+  function beginPlayback(delayMs = 0) {
+    if (startTimerRef.current) {
+      window.clearTimeout(startTimerRef.current);
+    }
+
+    startTimerRef.current = window.setTimeout(() => {
+      startTimerRef.current = null;
+      setStage('watch');
+      setPlayKey((value) => value + 1);
+    }, delayMs);
+  }
+
   function playSequence() {
     setLatestResult(null);
     resetRoundState();
-    setStage('watch');
-    setPlayKey((value) => value + 1);
+    focusBoard();
+    beginPlayback(180);
   }
 
   function startNewSequence() {
@@ -168,8 +189,8 @@ export default function ReverseCorsiBlockTask() {
     setLatestResult(null);
     setCurrentTrial((value) => value + 1);
     resetRoundState();
-    setStage('watch');
-    setPlayKey((value) => value + 1);
+    focusBoard();
+    beginPlayback(180);
   }
 
   function handlePrimaryAction() {
@@ -198,12 +219,20 @@ export default function ReverseCorsiBlockTask() {
   }
 
   function handleTryAgain() {
-    loadRandomSequence(sequenceLength, true);
+    startNewSequence();
   }
 
   function handleNextChallenge() {
-    loadRandomSequence(sequenceLength, true);
+    startNewSequence();
   }
+
+  useEffect(() => {
+    return () => {
+      if (startTimerRef.current) {
+        window.clearTimeout(startTimerRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (stage !== 'watch') return undefined;
@@ -268,9 +297,11 @@ export default function ReverseCorsiBlockTask() {
   const primaryActionLabel =
     stage === 'watch'
       ? 'Playing...'
-      : totalRounds === 0 && currentTrial === 1
-        ? 'Start'
-        : 'Start new block';
+      : stage === 'respond'
+        ? 'Go'
+        : totalRounds === 0 && currentTrial === 1
+          ? 'Start'
+          : 'Start new block';
   const stageLabel =
     stage === 'watch'
       ? 'Watch'
@@ -370,15 +401,7 @@ export default function ReverseCorsiBlockTask() {
           })}
         </div>
 
-        <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <button
-            type="button"
-            onClick={handlePrimaryAction}
-            disabled={stage === 'watch'}
-            className="min-h-[48px] rounded-2xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            {primaryActionLabel}
-          </button>
+        <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
           <button
             type="button"
             onClick={clearResponse}
@@ -416,15 +439,30 @@ export default function ReverseCorsiBlockTask() {
         </div>
       </section>
 
-      <section className="rounded-[1.75rem] border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
-        <div className="mb-4 flex items-center justify-between gap-3">
+      <section
+        ref={boardSectionRef}
+        className="rounded-[1.75rem] border border-slate-200 bg-white p-4 shadow-sm sm:p-6"
+      >
+        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h3 className="text-lg font-semibold text-slate-900">Corsi board</h3>
             <p className="text-sm text-slate-600">Participant view</p>
           </div>
-          <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
-            {responseProgress}% complete
-          </span>
+          <div className="flex flex-col gap-2 sm:items-end">
+            <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
+              {responseProgress}% complete
+            </span>
+            {stage !== 'result' && (
+              <button
+                type="button"
+                onClick={handlePrimaryAction}
+                disabled={isRoundActive}
+                className="min-h-[48px] w-full rounded-2xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto sm:min-w-44"
+              >
+                {primaryActionLabel}
+              </button>
+            )}
+          </div>
         </div>
 
         <div className="rounded-[1.75rem] border border-slate-200 bg-slate-50 p-3 sm:p-4 md:p-8">
@@ -469,7 +507,7 @@ export default function ReverseCorsiBlockTask() {
                 onClick={handleNextChallenge}
                 className="min-h-[44px] rounded-2xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700"
               >
-                New {pluralizeBlock(sequenceLength)} run
+                Start new block
               </button>
             </div>
           )}
@@ -487,7 +525,7 @@ export default function ReverseCorsiBlockTask() {
                 onClick={handleTryAgain}
                 className="min-h-[44px] rounded-2xl bg-rose-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-rose-700"
               >
-                Try another {pluralizeBlock(sequenceLength)} run
+                Start new block
               </button>
             </div>
           )}
