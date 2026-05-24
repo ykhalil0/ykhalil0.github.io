@@ -5,14 +5,14 @@ Source for your personal website at:
 
 ## Stack
 - Static HTML + CSS for the main site pages
-- Isolated React + Vite + Tailwind build for `games/digital-block-span/`
+- Isolated React + Vite + Tailwind build for `games/`
 - Hosted with GitHub Pages (`ykhalil0.github.io`)
 
 ## Project Structure
 - `index.html`: main page content and metadata
 - `books/index.html`: standalone books page
-- `game-src/`: source for the Digital Block Span React page
-- `games/digital-block-span/`: built static output served by GitHub Pages
+- `game-src/`: source for the React game pages
+- `games/`: built static output served by GitHub Pages
 - `style.css`: site styling
 - `package.json`: game build and preview scripts
 - `vite.config.mjs`: isolated Vite config for the game page
@@ -35,7 +35,7 @@ npm install
 npm run dev:game
 ```
 
-For a production rebuild of the published game page:
+For a production rebuild of the published game pages:
 
 ```bash
 npm run build:game
@@ -57,6 +57,6 @@ Quick reminders:
 ## Editing Workflow
 1. Update `index.html`, `style.css`, and/or `game-src/`.
 2. If `game-src/` changed, run `npm run build:game`.
-3. Commit both source changes and the rebuilt `games/digital-block-span/` output.
+3. Commit both source changes and the rebuilt `games/` output.
 4. Push to `main`.
 5. GitHub Pages deploys automatically.
