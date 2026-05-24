@@ -46,7 +46,8 @@ Reference `docs/website-philosophy.md` before making UI or content-structure cha
 Treat it as the source of truth for current design preferences and constraints.
 
 Quick reminders:
-- Use `Inter` and preserve the current type scale.
+- Use Source Serif 4 for homepage/books body text, Source Sans 3 for headings, UI/meta text, and game pages, and preserve the current type scale.
+- Keep the top-right light/dark theme toggle minimal and text-only.
 - Publications: title + right-side cedar year + IEEE-style metadata (no `[1]`, newest first).
 - Books: `Title — Author, Year.` format on `/books/`; personal comments optional; no numbering.
 - Books can be grouped with simple lowercase category sub-headers.
