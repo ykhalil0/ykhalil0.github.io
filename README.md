@@ -41,6 +41,15 @@ For a production rebuild of the published game pages:
 npm run build:game
 ```
 
+To check the rebuilt pages at their deployed `/games/` paths:
+
+```bash
+npm run preview:game
+```
+
+Then open `http://localhost:4173/games/digital-block-span/` or
+`http://localhost:4173/games/reverse-corsi-block/`.
+
 ## Design Philosophy
 Reference `docs/website-philosophy.md` before making UI or content-structure changes.
 Treat it as the source of truth for current design preferences and constraints.

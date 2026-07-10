@@ -2,20 +2,21 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { ChevronDown, ChevronUp, HelpCircle, RotateCcw } from 'lucide-react';
 
 const BLOCKS = [
-  { id: 1, x: 16, y: 26 },
-  { id: 2, x: 40, y: 15 },
-  { id: 3, x: 68, y: 24 },
-  { id: 4, x: 84, y: 46 },
-  { id: 5, x: 55, y: 43 },
-  { id: 6, x: 25, y: 49 },
-  { id: 7, x: 14, y: 72 },
-  { id: 8, x: 43, y: 80 },
-  { id: 9, x: 72, y: 73 },
-  { id: 10, x: 88, y: 82 },
+  { id: 1, label: 'upper left', x: 12, y: 20 },
+  { id: 2, label: 'top center', x: 38, y: 11 },
+  { id: 3, label: 'upper right', x: 68, y: 20 },
+  { id: 4, label: 'middle right', x: 89, y: 42 },
+  { id: 5, label: 'center', x: 59, y: 43 },
+  { id: 6, label: 'middle left', x: 29, y: 46 },
+  { id: 7, label: 'lower left', x: 11, y: 75 },
+  { id: 8, label: 'bottom center', x: 39, y: 87 },
+  { id: 9, label: 'lower right', x: 68, y: 71 },
+  { id: 10, label: 'bottom right', x: 89, y: 89 },
 ];
 
 const LENGTH_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const DEFAULT_LENGTH = 5;
+const COUNTDOWN_MS = 650;
 const PLAYBACK_MS = 650;
 const GAP_MS = 260;
 
@@ -58,12 +59,21 @@ function shuffle(values) {
   return nextValues;
 }
 
-function randomSequence(length) {
+function randomSequence(length, previous = []) {
+  for (let attempt = 0; attempt < 20; attempt += 1) {
+    const next = shuffle(BLOCKS.map((block) => block.id)).slice(0, length);
+    if (!arraysEqual(next, previous)) return next;
+  }
+
   return shuffle(BLOCKS.map((block) => block.id)).slice(0, length);
 }
 
+function formatBlockLabel(id) {
+  return BLOCKS.find((block) => block.id === id)?.label ?? `block ${id}`;
+}
+
 function formatSequence(sequence) {
-  return sequence.join(' -> ');
+  return sequence.map(formatBlockLabel).join(' → ');
 }
 
 function sleep(ms) {
@@ -74,26 +84,38 @@ function pluralizeBlock(length) {
   return length === 1 ? '1 block' : `${length} blocks`;
 }
 
-function CorsiBlock({ active, disabled, id, onClick, x, y }) {
+function CorsiBlock({ active, buttonRef, disabled, id, onClick, revealOrder, x, y }) {
+  const label = formatBlockLabel(id);
+
   return (
     <button
+      ref={buttonRef}
       type="button"
       onClick={() => onClick(id)}
       disabled={disabled}
-      aria-label={`Corsi block ${id}`}
-      className={`absolute h-12 w-12 -translate-x-1/2 -translate-y-1/2 touch-manipulation rounded-2xl border-2 transition-all duration-150 sm:h-16 sm:w-16 md:h-20 md:w-20 ${
+      aria-label={`${label} Corsi block`}
+      className={`absolute h-11 w-11 -translate-x-1/2 -translate-y-1/2 touch-manipulation rounded-xl border-2 transition-all duration-150 focus-visible:z-10 focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-slate-900 motion-reduce:transition-none sm:h-16 sm:w-16 sm:rounded-2xl md:h-20 md:w-20 ${
         active
-          ? 'scale-110 border-white bg-cyan-500 shadow-2xl'
-          : 'border-cyan-700 bg-cyan-600 hover:scale-105'
-      } ${disabled ? 'cursor-not-allowed opacity-[0.88]' : 'cursor-pointer'}`}
+          ? 'z-10 scale-110 border-amber-950 bg-amber-300 shadow-2xl'
+          : 'border-cyan-800 bg-cyan-600 enabled:hover:scale-105 enabled:hover:bg-cyan-700'
+      } ${disabled ? 'cursor-default' : 'cursor-pointer'}`}
       style={{ left: `${x}%`, top: `${y}%` }}
     >
-      <span className="sr-only">Corsi block {id}</span>
+      <span className="sr-only">{label} Corsi block</span>
       <span
-        className={`absolute inset-0 rounded-2xl ring-4 ring-offset-2 ${
-          active ? 'ring-cyan-200/90' : 'ring-transparent'
+        aria-hidden="true"
+        className={`absolute inset-0 rounded-xl ring-4 ring-offset-2 sm:rounded-2xl ${
+          active ? 'ring-amber-200' : 'ring-transparent'
         }`}
       />
+      {revealOrder > 0 && (
+        <span
+          aria-hidden="true"
+          className="absolute inset-0 grid place-items-center text-base font-bold text-white sm:text-lg"
+        >
+          {revealOrder}
+        </span>
+      )}
     </button>
   );
 }
@@ -112,9 +134,9 @@ function ResultBadge({ correct }) {
 
 export default function ReverseCorsiBlockTask() {
   const [sequenceLength, setSequenceLength] = useState(DEFAULT_LENGTH);
-  const [currentTrial, setCurrentTrial] = useState(1);
   const [currentSequence, setCurrentSequence] = useState(() => randomSequence(DEFAULT_LENGTH));
   const [stage, setStage] = useState('ready');
+  const [countdown, setCountdown] = useState(3);
   const [activeBlock, setActiveBlock] = useState(null);
   const [response, setResponse] = useState([]);
   const [latestResult, setLatestResult] = useState(null);
@@ -125,35 +147,37 @@ export default function ReverseCorsiBlockTask() {
   const [bestSolvedLength, setBestSolvedLength] = useState(0);
 
   const boardSectionRef = useRef(null);
+  const firstBlockRef = useRef(null);
   const responseStartRef = useRef(null);
-  const startTimerRef = useRef(null);
+  const resultSectionRef = useRef(null);
+  const tapTimerRef = useRef(null);
   const expected = useMemo(() => [...currentSequence].reverse(), [currentSequence]);
   const accuracy = totalRounds ? Math.round((totalCorrect / totalRounds) * 100) : 0;
-  const responseProgress = currentSequence.length
-    ? Math.round((response.length / currentSequence.length) * 100)
-    : 0;
   const latestWasIncorrect = Boolean(latestResult && !latestResult.correct);
   const latestWasCorrect = Boolean(latestResult && latestResult.correct);
 
   function resetRoundState() {
+    if (tapTimerRef.current) {
+      window.clearTimeout(tapTimerRef.current);
+      tapTimerRef.current = null;
+    }
+
     responseStartRef.current = null;
     setStage('ready');
+    setCountdown(3);
     setActiveBlock(null);
     setResponse([]);
   }
 
-  function loadRandomSequence(nextLength = sequenceLength, incrementTrial = false) {
-    setCurrentSequence(randomSequence(nextLength));
+  function loadRandomSequence(nextLength = sequenceLength) {
+    setCurrentSequence((current) => randomSequence(nextLength, current));
     setLatestResult(null);
     resetRoundState();
-    if (incrementTrial) {
-      setCurrentTrial((value) => value + 1);
-    }
   }
 
   function selectSequenceLength(nextLength) {
     setSequenceLength(nextLength);
-    setCurrentSequence(randomSequence(nextLength));
+    setCurrentSequence((current) => randomSequence(nextLength, current));
     setLatestResult(null);
     resetRoundState();
   }
@@ -165,52 +189,37 @@ export default function ReverseCorsiBlockTask() {
     });
   }
 
-  function beginPlayback(delayMs = 0) {
-    if (startTimerRef.current) {
-      window.clearTimeout(startTimerRef.current);
-    }
-
-    startTimerRef.current = window.setTimeout(() => {
-      startTimerRef.current = null;
-      setStage('watch');
-      setPlayKey((value) => value + 1);
-    }, delayMs);
-  }
-
-  function playSequence() {
+  function startSequence() {
     setLatestResult(null);
     resetRoundState();
+    setCountdown(3);
+    setStage('countdown');
     focusBoard();
-    beginPlayback(180);
   }
 
   function startNewSequence() {
-    setCurrentSequence(randomSequence(sequenceLength));
+    setCurrentSequence((current) => randomSequence(sequenceLength, current));
     setLatestResult(null);
-    setCurrentTrial((value) => value + 1);
-    resetRoundState();
+    setResponse([]);
+    responseStartRef.current = null;
+    setActiveBlock(null);
+    setCountdown(3);
+    setStage('countdown');
     focusBoard();
-    beginPlayback(180);
   }
 
   function handlePrimaryAction() {
-    if (stage === 'result') {
-      startNewSequence();
-      return;
-    }
-
-    playSequence();
+    startSequence();
   }
 
   function clearResponse() {
     if (stage !== 'respond') return;
-    responseStartRef.current = performance.now();
+    setActiveBlock(null);
     setResponse([]);
   }
 
   function resetSession() {
-    setCurrentTrial(1);
-    setCurrentSequence(randomSequence(sequenceLength));
+    setCurrentSequence((current) => randomSequence(sequenceLength, current));
     setTotalRounds(0);
     setTotalCorrect(0);
     setBestSolvedLength(0);
@@ -228,11 +237,27 @@ export default function ReverseCorsiBlockTask() {
 
   useEffect(() => {
     return () => {
-      if (startTimerRef.current) {
-        window.clearTimeout(startTimerRef.current);
+      if (tapTimerRef.current) {
+        window.clearTimeout(tapTimerRef.current);
       }
     };
   }, []);
+
+  useEffect(() => {
+    if (stage !== 'countdown') return undefined;
+
+    const timer = window.setTimeout(() => {
+      if (countdown <= 1) {
+        setStage('watch');
+        setPlayKey((value) => value + 1);
+        return;
+      }
+
+      setCountdown((value) => value - 1);
+    }, COUNTDOWN_MS);
+
+    return () => window.clearTimeout(timer);
+  }, [stage, countdown]);
 
   useEffect(() => {
     if (stage !== 'watch') return undefined;
@@ -263,6 +288,17 @@ export default function ReverseCorsiBlockTask() {
     };
   }, [stage, currentSequence, playKey]);
 
+  useEffect(() => {
+    if (stage === 'respond') {
+      firstBlockRef.current?.focus({ preventScroll: true });
+    }
+
+    if (stage === 'result') {
+      resultSectionRef.current?.focus({ preventScroll: true });
+      resultSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, [stage]);
+
   function handleTap(id) {
     if (stage !== 'respond') return;
 
@@ -270,6 +306,14 @@ export default function ReverseCorsiBlockTask() {
     const elapsed = responseStartRef.current ? Math.round(now - responseStartRef.current) : 0;
     const nextResponse = [...response, id];
 
+    if (tapTimerRef.current) {
+      window.clearTimeout(tapTimerRef.current);
+    }
+    setActiveBlock(id);
+    tapTimerRef.current = window.setTimeout(() => {
+      setActiveBlock(null);
+      tapTimerRef.current = null;
+    }, 160);
     setResponse(nextResponse);
 
     if (nextResponse.length === expected.length) {
@@ -282,7 +326,7 @@ export default function ReverseCorsiBlockTask() {
       }
 
       setLatestResult({
-        trial: currentTrial,
+        trial: totalRounds + 1,
         length: sequenceLength,
         expected,
         response: nextResponse,
@@ -293,23 +337,39 @@ export default function ReverseCorsiBlockTask() {
     }
   }
 
-  const isRoundActive = stage === 'watch' || stage === 'respond';
+  const isRoundActive = stage === 'countdown' || stage === 'watch' || stage === 'respond';
   const primaryActionLabel =
-    stage === 'watch'
-      ? 'Playing...'
-      : stage === 'respond'
-        ? 'Go'
-        : totalRounds === 0 && currentTrial === 1
-          ? 'Start'
-          : 'Start new block';
+    stage === 'countdown'
+      ? `Starting in ${countdown}`
+      : stage === 'watch'
+        ? 'Playing…'
+        : 'Start sequence';
   const stageLabel =
-    stage === 'watch'
-      ? 'Watch'
+    stage === 'countdown'
+      ? `Starting in ${countdown}`
+      : stage === 'watch'
+        ? 'Watch the sequence'
       : stage === 'respond'
-        ? 'Go'
+        ? 'Your turn'
         : stage === 'result'
-          ? 'Result'
+          ? latestResult?.correct
+            ? 'Correct'
+            : 'Not quite'
           : 'Ready';
+  const liveMessage =
+    stage === 'countdown'
+      ? `Starting in ${countdown}`
+      : stage === 'watch'
+        ? activeBlock
+          ? `Watch: ${formatBlockLabel(activeBlock)}`
+          : 'Watch the sequence.'
+        : stage === 'respond'
+          ? `Your turn. Select ${currentSequence.length} blocks in reverse order.`
+          : latestResult
+            ? latestResult.correct
+              ? `Correct. You reversed ${latestResult.length} blocks.`
+              : 'Incorrect. Review the expected reverse order below.'
+            : 'Ready to start.';
 
   return (
     <div className="space-y-4 sm:space-y-5">
@@ -325,7 +385,7 @@ export default function ReverseCorsiBlockTask() {
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
-                Round {currentTrial}
+                Round {latestResult?.trial ?? totalRounds + 1}
               </span>
               <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
                 Selected {pluralizeBlock(sequenceLength)}
@@ -343,7 +403,8 @@ export default function ReverseCorsiBlockTask() {
             type="button"
             onClick={() => setShowInstructions((value) => !value)}
             aria-expanded={showInstructions}
-            className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-2xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm"
+            disabled={isRoundActive}
+            className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-2xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm disabled:cursor-not-allowed disabled:opacity-40"
           >
             <HelpCircle className="h-4 w-4" />
             How to play
@@ -401,27 +462,20 @@ export default function ReverseCorsiBlockTask() {
           })}
         </div>
 
-        <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+        <div className="mt-4 grid grid-cols-2 gap-3">
           <button
             type="button"
-            onClick={clearResponse}
-            disabled={stage !== 'respond'}
-            className="min-h-[48px] rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 disabled:cursor-not-allowed disabled:opacity-40"
-          >
-            Clear
-          </button>
-          <button
-            type="button"
-            onClick={() => loadRandomSequence(sequenceLength, true)}
+            onClick={() => loadRandomSequence(sequenceLength)}
             disabled={isRoundActive}
             className="min-h-[48px] rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 disabled:cursor-not-allowed disabled:opacity-40"
           >
-            New pattern
+            New challenge
           </button>
           <button
             type="button"
             onClick={resetSession}
-            className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700"
+            disabled={isRoundActive}
+            className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-2xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 disabled:cursor-not-allowed disabled:opacity-40"
           >
             <RotateCcw className="h-4 w-4" />
             Reset
@@ -441,7 +495,7 @@ export default function ReverseCorsiBlockTask() {
 
       <section
         ref={boardSectionRef}
-        className="rounded-[1.75rem] border border-slate-200 bg-white p-4 shadow-sm sm:p-6"
+        className="scroll-mt-4 rounded-[1.75rem] border border-slate-200 bg-white p-4 shadow-sm sm:p-6"
       >
         <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
@@ -450,9 +504,18 @@ export default function ReverseCorsiBlockTask() {
           </div>
           <div className="flex flex-col gap-2 sm:items-end">
             <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
-              {responseProgress}% complete
+              {response.length} of {currentSequence.length} selected
             </span>
-            {stage !== 'result' && (
+            {stage === 'respond' && response.length > 0 && (
+              <button
+                type="button"
+                onClick={clearResponse}
+                className="min-h-[44px] w-full rounded-2xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 sm:w-auto"
+              >
+                Clear taps
+              </button>
+            )}
+            {stage !== 'result' && stage !== 'respond' && (
               <button
                 type="button"
                 onClick={handlePrimaryAction}
@@ -465,21 +528,24 @@ export default function ReverseCorsiBlockTask() {
           </div>
         </div>
 
-        <div className="rounded-[1.75rem] border border-slate-200 bg-slate-50 p-3 sm:p-4 md:p-8">
-          <div className="mx-auto max-w-3xl rounded-[1.75rem] border-4 border-slate-200 bg-white p-3 sm:p-4 md:p-6">
-            <div className="relative aspect-[4/3] w-full rounded-3xl bg-slate-100 shadow-inner">
-              <div className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-700 shadow-sm">
-                {stageLabel}
-              </div>
+        <p className="sr-only" aria-live="assertive" aria-atomic="true">
+          {liveMessage}
+        </p>
+
+        <div className="rounded-[1.75rem] border border-slate-200 bg-slate-50 p-2 sm:p-4 md:p-8">
+          <div className="mx-auto max-w-3xl rounded-[1.5rem] border-2 border-slate-200 bg-white p-2 sm:rounded-[1.75rem] sm:border-4 sm:p-4 md:p-6">
+            <div className="relative aspect-square w-full rounded-2xl bg-slate-100 shadow-inner sm:aspect-[4/3] sm:rounded-3xl">
               {BLOCKS.map((block) => (
                 <CorsiBlock
                   key={block.id}
                   id={block.id}
+                  buttonRef={block.id === BLOCKS[0].id ? firstBlockRef : undefined}
                   x={block.x}
                   y={block.y}
                   active={activeBlock === block.id}
                   disabled={stage !== 'respond'}
                   onClick={handleTap}
+                  revealOrder={stage === 'result' ? expected.indexOf(block.id) + 1 : 0}
                 />
               ))}
             </div>
@@ -488,7 +554,13 @@ export default function ReverseCorsiBlockTask() {
       </section>
 
       {latestResult && stage === 'result' && (
-        <section className="rounded-[1.75rem] border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+        <section
+          ref={resultSectionRef}
+          tabIndex="-1"
+          role="status"
+          aria-live="polite"
+          className="scroll-mt-4 rounded-[1.75rem] border border-slate-200 bg-white p-4 shadow-sm outline-none sm:p-6"
+        >
           <div className="flex flex-wrap items-center gap-3">
             <h3 className="text-lg font-semibold text-slate-900">Result</h3>
             <ResultBadge correct={latestResult.correct} />
@@ -507,7 +579,7 @@ export default function ReverseCorsiBlockTask() {
                 onClick={handleNextChallenge}
                 className="min-h-[44px] rounded-2xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700"
               >
-                Start new block
+                Next challenge
               </button>
             </div>
           )}
@@ -517,7 +589,7 @@ export default function ReverseCorsiBlockTask() {
               <div>
                 <div className="text-sm font-semibold text-rose-800">Incorrect reverse order.</div>
                 <div className="mt-1 text-sm text-rose-700">
-                  Try another pattern at the same span, or pick a different length.
+                  Review the numbered path on the board, then try a fresh pattern.
                 </div>
               </div>
               <button
@@ -525,7 +597,7 @@ export default function ReverseCorsiBlockTask() {
                 onClick={handleTryAgain}
                 className="min-h-[44px] rounded-2xl bg-rose-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-rose-700"
               >
-                Start new block
+                New challenge
               </button>
             </div>
           )}
